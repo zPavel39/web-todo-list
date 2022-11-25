@@ -14,13 +14,14 @@
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
+    flex-wrap: wrap;
     gap: 50px;
 
     &__left {
         display: flex;
         flex-direction: column;
+        width: 60%;
         gap: 4px;
-        width: 100%;
 
         &_inputTitle {
             padding: 2px;
@@ -80,6 +81,7 @@
             font-family: 'Montserrat', sans-serif;
             border-radius: 4px;
             cursor: pointer;
+
             &:hover {
                 color: white;
                 background-color: #238636;

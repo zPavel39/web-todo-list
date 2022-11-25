@@ -1,31 +1,39 @@
 import React, { useContext, useState } from 'react'
-import './formTask.less'
 import { AppContext } from '../../context/context';
+import { ref, uploadBytes } from "firebase/storage";
+import './formTask.less'
 
 export const FormTask = () => {
     const [titleValue, setTitleValue] = useState('')
     const [descriptionValue, setDescriptionValue] = useState('')
     const [dateValue, setDateValue] = useState((new Date().toISOString()).slice(0, 10))
-    const [fileValue, setFileValue] = useState()
-    const { ref } = useContext(AppContext)
+    const { firestore, firestorage } = useContext(AppContext)
 
     const addTask = async (e) => {
         e.preventDefault()
+        const file = e.target[3].files[0];
         const idx = +new Date()
-        ref
+        addFile(file, idx);
+        firestore
             .doc(`${idx}`)
             .set({
                 id: idx,
                 title: titleValue,
                 description: descriptionValue,
                 date: dateValue,
-                file: fileValue,
+                file: file.name,
+                completed: false,
             })
             .catch((err) => {
                 console.log('err', err)
             })
         setTitleValue('')
         setDescriptionValue('')
+    }
+
+    const addFile = async (file, id) => {
+        const fileRef = ref(firestorage, `todoFile/${id + '_' + file.name}`);
+        uploadBytes(fileRef, file)
     }
 
     return (
@@ -46,7 +54,7 @@ export const FormTask = () => {
                         rows={4}
                         maxLength={200}
                         placeholder='Введите описание задачи'
-                        defaultValue={descriptionValue}
+                        value={descriptionValue}
                         onChange={(e) => setDescriptionValue(e.target.value)}
                     />
                 </div>
@@ -62,7 +70,7 @@ export const FormTask = () => {
                     <input
                         className='form__right_inputFile'
                         type="file"
-                        onChange={(e) => setFileValue(e.target.value)}
+                        accept="image/*, .doc, .docx, .xml, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document"
                     />
                     <button className='form__right_btnSubmit' type='submit'>Готово</button>
                 </div>

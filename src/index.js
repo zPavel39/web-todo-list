@@ -4,6 +4,7 @@ import App from './App';
 import {  AppContext } from './context/context'
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
+import { getStorage, ref } from "firebase/storage";
 import './index.css';
 
 
@@ -19,15 +20,17 @@ firebase.initializeApp({
 
 
 
-const ref = firebase.firestore().collection('tasks')
-console.log('ref', ref)
+const firestore = firebase.firestore().collection('tasks');
+console.log('firestore', firestore)
+const firestorage = getStorage();
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <AppContext.Provider value={{
       firebase,
-      ref,
+      firestore,
+      firestorage,
     }}>
       <App />
     </AppContext.Provider>
