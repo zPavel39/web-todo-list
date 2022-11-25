@@ -13,7 +13,9 @@ export const FormTask = () => {
         e.preventDefault()
         const file = e.target[3].files[0];
         const idx = +new Date()
-        addFile(file, idx);
+        if (file !== undefined) {
+            addFile(file.name, idx);
+        }
         firestore
             .doc(`${idx}`)
             .set({
@@ -21,7 +23,7 @@ export const FormTask = () => {
                 title: titleValue,
                 description: descriptionValue,
                 date: dateValue,
-                file: file.name,
+                file: file ? file.name : '',
                 completed: false,
             })
             .catch((err) => {
@@ -31,8 +33,8 @@ export const FormTask = () => {
         setDescriptionValue('')
     }
 
-    const addFile = async (file, id) => {
-        const fileRef = ref(firestorage, `todoFile/${id + '_' + file.name}`);
+    const addFile = (file, id) => {
+        const fileRef = ref(firestorage, `todoFile/${id + '_' + file}`);
         uploadBytes(fileRef, file)
     }
 

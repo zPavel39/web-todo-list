@@ -116,7 +116,11 @@ export const ListTasks = () => {
                                 :
                                 <div className='tasks__rightBlock'>
                                     <span className='tasks__rightBlock_date'>{date.split("-").reverse().join(".")}</span>
-                                    <a className='tasks__rightBlock_download' href={url} onClick={() => downloadClick(id, file)} download={file}>Скачать Файл</a>
+                                    {file === '' ? ''
+                                        :
+                                        <a className='tasks__rightBlock_download' href={url} onClick={() => downloadClick(id, file)} download={file}>Скачать Файл</a>
+                                    }
+
                                     <div className='tasks__blockBtn'>
                                         <button className='tasks__blockBtn_btn' onClick={() => handleClickChange(id, title, description, date)}>Изменить</button>
                                         <button className='tasks__blockBtn_btn' onClick={() => handleClickCompleted(id, completed)}>Отметить</button>
