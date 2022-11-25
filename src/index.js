@@ -19,9 +19,10 @@ firebase.initializeApp({
 });
 
 
-
+// инициализирую хранилища firestore, дальнейшее определенеие в useContext
 const firestore = firebase.firestore().collection('tasks');
 console.log('firestore', firestore)
+// инициализирую хранилища firestorage, дальнейшее определенеие в useContext
 const firestorage = getStorage();
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

@@ -12,32 +12,49 @@ export const ListTasks = () => {
     const [dateValue, setDateValue] = useState('')
     const [url, setUrl] = useState('')
 
+    // хук возвращает список задач и состояние загружен ли список
     const [tasks, loading] = useCollectionData(
         firestore.orderBy('completed')
     )
+    // если список не загружен возвращает loading а мог быть(спинер)
     if (loading) {
         return (
             <h2 className='loading'>Loading...</h2>
         )
     }
+    /**
+     * Функция удаления задачи
+     * @param {*} task задача из списка
+     * @param {*} id  id
+     * @param {*} file название файла
+     */
     const handleClickDelete = async (task, id, file) => {
+        //удаляем файл по его названию + id из firestorage
         deleteObject(ref(firestorage, `todoFile/${id + '_' + file}`)).then(() => {
         })
             .catch((error) => {
                 console.log('delete error', error)
             });
+        // удаляем задачу из списка firestore
         firestore
             .doc(`${task.id}`)
             .delete()
 
     }
+    // функция передачи данных в поля изменения задачи
     const handleClickChange = (id, title, description, date) => {
         setChange(id);
         setTitleValue(title);
         setDescriptionValue(description)
         setDateValue(date)
     }
-
+    /**
+     * Функция сохронения изменения задачи
+     * @param {*} id id задачи
+     * @param {string} titleValue 
+     * @param {string} descriptionValue 
+     * @param {date} dateValue 
+     */
     const handleClickSave = (id, titleValue, descriptionValue, dateValue) => {
         setChange(false)
         firestore
@@ -53,7 +70,11 @@ export const ListTasks = () => {
                 console.log('err', err)
             })
     }
-
+    /**
+     * Функция отметки о выполнении задачи
+     * @param {*} id id задачи
+     * @param {boolean} completed 
+     */
     const handleClickCompleted = (id, completed) => {
         firestore
             .doc(`${id}`)
@@ -64,6 +85,11 @@ export const ListTasks = () => {
                 console.log('err', err)
             })
     }
+    /**
+     * Функция получения URL адреса файла задачи c firestorage
+     * @param {*} id id задачи
+     * @param {string} file имя файла
+     */
     const downloadClick = (id, file) => {
         getDownloadURL(ref(firestorage, `todoFile/${id + '_' + file}`))
             .then((url) => {

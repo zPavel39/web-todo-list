@@ -7,17 +7,25 @@ export const FormTask = () => {
     const [titleValue, setTitleValue] = useState('')
     const [descriptionValue, setDescriptionValue] = useState('')
     const [dateValue, setDateValue] = useState((new Date().toISOString()).slice(0, 10))
+    // берем из контекста хранилища store и  storage
     const { firestore, firestorage } = useContext(AppContext)
-
-    const addTask = async (e) => {
+    /**
+    * Отправка формы при клике на кнопку 'Готово'
+    */
+    const handleSubmitTask = async (e) => {
         e.preventDefault()
         const file = e.target[3].files[0]
+        // использовал преобразование +new Date() для генирации id  а мог установить uiid библиотеку
         const idx = +new Date()
+        // првоерка выбран файл или нет
         if (file !== undefined) {
             addFile(file, idx);
         }
+        // отправка данных формы в firestore
         firestore
+            //название массива объекта равна id 
             .doc(`${idx}`)
+            // инициализация объекта
             .set({
                 id: idx,
                 title: titleValue,
@@ -29,10 +37,15 @@ export const FormTask = () => {
             .catch((err) => {
                 console.log('err', err)
             })
+        // очистка полей формы
         setTitleValue('')
         setDescriptionValue('')
     }
-
+    /**
+     * Отправка файла в firestorage
+     * @param {*} file выбранный файл
+     * @param {*} id  id новой задачи (idx)
+     */
     const addFile = (file, id) => {
         const fileRef = ref(firestorage, `todoFile/${id + '_' + file.name}`);
         uploadBytes(fileRef, file)
@@ -40,7 +53,7 @@ export const FormTask = () => {
 
     return (
         <div className='container'>
-            <form className='form' onSubmit={addTask}>
+            <form className='form' onSubmit={handleSubmitTask}>
                 <div className='form__left'>
                     <label>Заголовок:</label>
                     <input
