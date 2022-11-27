@@ -103,10 +103,63 @@
             }
         }
     }
+
+    @media (max-width:817px) {
+        .tasks {
+            &__list {
+                padding: 12px 10px;
+                gap: 8px;
+            }
+
+            &__rightBlock {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                width: 100%;
+            }
+
+            &__leftBlock {
+                max-width: none;
+                width: 100%;
+                flex-wrap: wrap;
+
+                &_inputTitle {
+                    max-width: none;
+                    width: 100%;
+
+                }
+            }
+
+        }
+    }
+
+    @media (max-width:495px) {
+        .tasks {
+            &__list {
+                padding: 10px 8px;
+            }
+
+            &__rightBlock {
+                flex-direction: row;
+                flex-wrap: wrap;
+                flex-direction: column;
+                width: 100%;
+            }
+
+            &__leftBlock {
+                width: 100%;
+                flex-wrap: wrap;
+                flex-direction: column;
+            }
+
+        }
+    }
 }
+
 .completed {
     opacity: 0.3;
 }
+
 .warning {
     border: 1px solid #388bfd;
 }

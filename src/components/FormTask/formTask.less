@@ -15,7 +15,7 @@
     align-items: flex-start;
     justify-content: space-between;
     flex-wrap: wrap;
-    gap: 50px;
+    gap: 8px;
 
     &__left {
         display: flex;
@@ -85,6 +85,51 @@
             &:hover {
                 color: white;
                 background-color: #238636;
+            }
+        }
+    }
+
+    @media (max-width: 858px) {
+        .form {
+            width: 100%;
+
+            &__left {
+                width: 100%;
+
+                &_inputTitle {
+                    max-width: none;
+                    width: 100%;
+                }
+
+                &_inputDescription {
+                    max-width: none;
+                    width: 100%;
+                }
+            }
+
+            &__right {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                width: 100%;
+                align-items: center;
+                max-width: none;
+                flex-wrap: wrap;
+                gap: 8px;
+
+                &_inputFile {
+                    margin-bottom: 0;
+                    max-width: 300px;
+                }
+
+                &_inputDate {
+                    margin-bottom: 0;
+                }
+            }
+
+            &__lable {
+                display: flex;
+                flex-direction: column;
             }
         }
     }

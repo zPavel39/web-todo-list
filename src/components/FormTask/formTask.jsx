@@ -14,7 +14,7 @@ export const FormTask = () => {
     */
     const handleSubmitTask = async (e) => {
         e.preventDefault()
-        const file = e.target[3].files[0]
+        const file = e.target[2].files[0]
         // использовал преобразование +new Date() для генирации id  а мог установить uiid библиотеку
         const idx = +new Date()
         // првоерка выбран файл или нет
@@ -74,19 +74,23 @@ export const FormTask = () => {
                     />
                 </div>
                 <div className='form__right'>
-                    <label>Дата окончания:</label>
-                    <input
-                        className='form__right_inputDate'
-                        type='date'
-                        value={dateValue}
-                        onChange={(e) => setDateValue(e.target.value)}
-                    />
-                    Фото/Документ
-                    <input
-                        className='form__right_inputFile'
-                        type="file"
-                        accept="image/*, .doc, .docx, .xml, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-                    />
+                    <div className='form__lable'>
+                        <label>Фото/Документ</label>
+                        <input
+                            className='form__right_inputFile'
+                            type="file"
+                            accept="image/*, .doc, .docx, .xml, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                        />
+                    </div>
+                    <div className='form__lable'>
+                        <label>Дата окончания:</label>
+                        <input
+                            className='form__right_inputDate'
+                            type='date'
+                            value={dateValue}
+                            onChange={(e) => setDateValue(e.target.value)}
+                        />
+                    </div>
                     <button className='form__right_btnSubmit' type='submit'>Готово</button>
                 </div>
             </form>
