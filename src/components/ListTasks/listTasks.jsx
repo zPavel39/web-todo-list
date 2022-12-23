@@ -14,13 +14,16 @@ export const ListTasks = () => {
 
     // хук возвращает список задач и состояние загружен ли список
     const [tasks, loading] = useCollectionData(
-        firestore.orderBy('completed')
+        firestore.orderBy('completed')     
     )
     // если список не загружен возвращает loading а мог быть(спинер)
     if (loading) {
         return (
             <h2 className='loading'>Loading...</h2>
         )
+    }
+    if (tasks === undefined) {
+        return
     }
     /**
      * Функция удаления задачи

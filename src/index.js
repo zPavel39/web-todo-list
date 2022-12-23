@@ -4,7 +4,7 @@ import App from './App';
 import {  AppContext } from './context/context'
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
-import { getStorage, ref } from "firebase/storage";
+import { getStorage } from "firebase/storage";
 import './index.css';
 
 
